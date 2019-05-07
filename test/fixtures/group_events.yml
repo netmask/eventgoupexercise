@@ -1,0 +1,18 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+normal:
+  status: 1
+  title: MyString
+  description: MyString
+  name: MyString
+  location: MyString
+  user: one
+
+deleted:
+  status: 1
+  title: MyString
+  description: MyString
+  name: MyString
+  location: MyString
+  user: two
+  deleted_at: 2019-05-06 20:21:24
