@@ -28,12 +28,37 @@ class GroupEventsControllerTest < ActionDispatch::IntegrationTest
           location: @group_event.location,
           name: @group_event.name,
           status: @group_event.status,
-          title: @group_event.title,
+          title: @group_event.title
         },
         user_id: @user.id
       }, as: :json
     end
 
+    assert_response :success
+  end
+
+  test 'should create group_event with days' do
+    days = 5
+
+    assert_difference('GroupEvent.count') do
+      post group_events_url, params: {
+          group_event: {
+              deleted_at: @group_event.deleted_at,
+              description: @group_event.description,
+              location: @group_event.location,
+              name: @group_event.name,
+              status: @group_event.status,
+              title: @group_event.title,
+              days: days
+          },
+          user_id: @user.id
+      }, as: :json
+    end
+    json_response = JSON.parse(response.body)
+
+    assert_equal json_response['days'], days
+    assert_equal Date.current.to_s, json_response['starts_at']
+    assert_equal (Date.current + days.day).to_s, json_response['ends_at']
     assert_response :success
   end
 
@@ -47,7 +72,6 @@ class GroupEventsControllerTest < ActionDispatch::IntegrationTest
   test 'should update group_event' do
     patch group_event_url(@group_event), params: {
       group_event: {
-        deleted_at: @group_event.deleted_at,
         description: @group_event.description,
         location: @group_event.location,
         name: @group_event.name,
@@ -56,13 +80,13 @@ class GroupEventsControllerTest < ActionDispatch::IntegrationTest
       },
       user_id: @user.id
     }, as: :json
+
     assert_response :success
   end
 
   test 'should publish event with all data' do
     patch group_event_url(@group_event), params: {
       group_event: {
-        deleted_at: @group_event.deleted_at,
         description: @group_event.description,
         location: @group_event.location,
         name: @group_event.name,

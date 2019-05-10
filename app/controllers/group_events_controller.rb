@@ -57,6 +57,6 @@ class GroupEventsController < ApplicationController
                                         :location,
                                         :starts_at,
                                         :ends_at,
-                                        :deleted_at)
+                                        :days)
   end
 end

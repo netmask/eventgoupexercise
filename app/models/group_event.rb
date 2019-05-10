@@ -22,7 +22,14 @@ class GroupEvent < ApplicationRecord
     update_attribute :deleted_at, Date.current
   end
 
-  def duration_in_days
+  def days
+    return 0 unless starts_at && ends_at
+
     (ends_at - starts_at).to_i
+  end
+
+  def days=(days)
+    self.starts_at = starts_at ? self.starts_at : Date.current
+    self.ends_at = starts_at + days.days
   end
 end

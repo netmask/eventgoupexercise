@@ -18,7 +18,27 @@ class GroupEventTest < ActiveSupport::TestCase
     group_event = GroupEvent.new(starts_at: Date.current,
                                  ends_at: Date.current + duration.days)
 
-    assert_equal group_event.duration_in_days, duration
+    assert_equal group_event.days, duration
+  end
+
+  test 'expect to return the days between today plus days' do
+    duration = 4
+
+    group_event = GroupEvent.new
+    group_event.days = duration
+
+    assert_equal group_event.days, duration
+  end
+
+
+  test 'expect to return the days between start_day plus days' do
+    duration = 4
+    start_date = Date.current + 3.days
+
+    group_event = GroupEvent.new(starts_at: start_date)
+    group_event.days = duration
+
+    assert_equal group_event.ends_at, start_date + duration.days
   end
 
   test 'expect to be valid  with incomplete data if not published' do
